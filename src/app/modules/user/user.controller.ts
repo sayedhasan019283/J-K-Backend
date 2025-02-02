@@ -7,14 +7,26 @@ import { userService } from './user.service';
 import { NextFunction, Request, Response } from 'express';
 import UserModel from './user.model';
 import AppError from '../../errors/AppError';
+import mongoose from 'mongoose';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userData = req.body;
-    // console.log("controller")
+    const payload = req.body;
+    const files = req.files as {
+      businessLicense?: { filename: string }[];
+      driveingLicense?: { filename: string }[];
+    };
 
 
-    const result = await userService.createUserIntoDB(userData);
+    if (files?.businessLicense && files.businessLicense[0]?.filename) {
+      payload.businessLicense = `/uploads/users/${files.businessLicense[0].filename}`;
+    }
+
+    if (files?.driveingLicense && files.driveingLicense[0]?.filename) {
+      payload.driveingLicense = `/uploads/users/${files.driveingLicense[0].filename}`;
+    }
+
+    const result = await userService.createUserIntoDB(payload);
 
     if (!result) {
       throw new Error("User not created successfully");
@@ -55,26 +67,17 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
    const id = req.user.userId;
     const payload = req.body;
     const files = req.files as {
-      profileImage?: { filename: string }[];
-      ethanDocuments?: { filename: string }[];
-      proofOfAddress?: { filename: string }[];
-      RIB?: { filename: string }[];
+      businessLicense?: { filename: string }[];
+      driveingLicense?: { filename: string }[];
     };
 
-    if (files?.profileImage && files.profileImage[0]?.filename) {
-      payload.profileImage = `/uploads/users/${files.profileImage[0].filename}`;
+
+    if (files?.businessLicense && files.businessLicense[0]?.filename) {
+      payload.businessLicense = `/uploads/users/${files.businessLicense[0].filename}`;
     }
 
-    if (files?.ethanDocuments && files.ethanDocuments[0]?.filename) {
-      payload.ethanDocuments = `/uploads/users/${files.ethanDocuments[0].filename}`;
-    }
-
-    if (files?.proofOfAddress && files.proofOfAddress[0]?.filename) {
-      payload.proofOfAddress = `/uploads/users/${files.proofOfAddress[0].filename}`;
-    }
-
-    if (files?.RIB && files.RIB[0]?.filename) {
-      payload.RIB = `/uploads/users/${files.RIB[0].filename}`;
+    if (files?.driveingLicense && files.driveingLicense[0]?.filename) {
+      payload.driveingLicense = `/uploads/users/${files.driveingLicense[0].filename}`;
     }
     const result = await userService.updateUserFromDB(id, payload);
     if (!result) {
@@ -204,7 +207,10 @@ const resetPassword = async (req: Request, res: Response, next: NextFunction) =>
 const makeAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = req.body;
-    const result = await userService.makeAdminFromDB(payload)
+    const { id } = req.params;
+    const branchID = new mongoose.Types.ObjectId(id);
+
+    const result = await userService.makeAdminFromDB(branchID ,payload)
     if (!result) {
       throw new Error("Make Admin Failed");
     }

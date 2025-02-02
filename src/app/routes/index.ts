@@ -6,6 +6,8 @@ import { codeRoutes } from '../modules/vaCode/vaCode.route';
 import { messageRoutes } from '../modules/chat/chat.route';
 import { paymentRoute } from '../modules/payment/payment.route';
 import { createBranchRoutes } from '../modules/createBranch/createBranch.route';
+import { stockItemRoutes } from '../modules/stockItem/stockItem.route';
+import { partsRoutes } from '../modules/parts/parts.routes';
 const router = Router();
 
 const moduleRoutes = [
@@ -34,7 +36,15 @@ const moduleRoutes = [
   {
     path: '/branch',
     route: createBranchRoutes,
-  }
+  },
+  {
+    path: '/stock-item',
+    route: stockItemRoutes,
+  },
+  {
+    path: '/parts',
+    route: partsRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { USER_ROLE } from "./user.constant";
 
 export type TUser = {
@@ -24,7 +25,8 @@ export type TUser = {
     password: string;
     confirmPassword: string;
     termsAndCondition: boolean;
-    branch: string;    
+    branch: string; 
+    branchID: mongoose.Types.ObjectId; // The ID of the sender;   
     role: "admin" | "user" | "super_admin" | "sub-admin";
     isBlocked: boolean; // Added field
     isverified: boolean; // Added field

@@ -5,6 +5,7 @@ import UserModel from "./user.model"
 import config from "../../config";
 import { createToken } from "./user.utils";
 import nodemailer from "nodemailer";
+import mongoose from "mongoose";
 
 const createUserIntoDB = async (userData: TUser) => {
   const user = await UserModel.findOne({ email: userData.email })
@@ -164,8 +165,9 @@ const resetPasswordFromDB = async (payload: TResetPassword, id: string) => {
 
 }
 
-const makeAdminFromDB = async (payload: Partial<TUser>) => {
+const makeAdminFromDB = async (branchID : mongoose.Types.ObjectId ,payload: Partial<TUser>) => {
   const { email, password, message } = payload;
+  payload.branchID = branchID;
   const result = await UserModel.create(payload)
   if (!result) {
     throw new Error("Admin Not Created");
@@ -187,11 +189,11 @@ const makeAdminFromDB = async (payload: Partial<TUser>) => {
     const mailOptions = {
       from: 'sayedhasan973@gmail.com',
       to: email,
-      subject: "CoBag Official",
+      subject: "J&K Official",
       html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-            <h2 style="color: #4CAF50; text-align: center;">Welcome to CoBag!</h2>
-            <p style="font-size: 16px; color: #333;">Congratulations! You have been promoted to an <strong>Admin</strong> on <strong>CoBag</strong>. Below are your credentials to access your account:</p>
+            <h2 style="color: #4CAF50; text-align: center;">Welcome to J&K!</h2>
+            <p style="font-size: 16px; color: #333;">Congratulations! You have been promoted to an <strong>Admin</strong> on <strong>J&K</strong>. Below are your credentials to access your account:</p>
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
               <tr>
                 <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Email</td>
@@ -205,10 +207,10 @@ const makeAdminFromDB = async (payload: Partial<TUser>) => {
             <p style="font-size: 16px; color: #333;">${message}</p>
             <p style="font-size: 16px; color: #333;">For your security, we recommend changing your password upon first login.</p>
             <p style="text-align: center; margin-top: 30px;">
-              <a href="https://cobag.com/login" style="background-color: #4CAF50; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">Login to CoBag</a>
+              <a href="https://J&K.com/login" style="background-color: #4CAF50; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">Login to J&K</a>
             </p>
             <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
-            <p style="font-size: 12px; color: #888; text-align: center;">If you did not request this, please contact us immediately at support@cobag.com.</p>
+            <p style="font-size: 12px; color: #888; text-align: center;">If you did not request this, please contact us immediately at support@J&K.com.</p>
           </div>
         `,
     };

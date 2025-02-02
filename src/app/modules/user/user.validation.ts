@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const UserSchema = z.object({
   body: z.object({
-    companyName: z.string().min(1, "Company name is required"),
+    companyName: z.string(),
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     phone: z.string().min(1, "Phone number is required"),

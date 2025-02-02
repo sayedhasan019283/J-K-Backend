@@ -19,27 +19,29 @@ router.patch(
   validateRequest(userValidation.UpdateUserSchema),
   upload.fields([
     {
-      name: "profileImage",
+      name: "driveingLicense",
       maxCount: 1
     },
     {
-      name: "ethanDocuments",
+      name: "businessLicense",
       maxCount:1
-    },
-    {
-      name: "proofOfAddress",
-      maxCount: 1
-    },
-    {
-      name: "RIB",
-      maxCount:1
-    },
+    }
   ]),
   userController.updateUser
 )
 router.post(
   '/register',
-  validateRequest(userValidation.UserSchema),
+  // validateRequest(userValidation.UserSchema),
+  upload.fields([
+    {
+      name: "driveingLicense",
+      maxCount: 1
+    },
+    {
+      name: "businessLicense",
+      maxCount:1
+    }
+  ]),
   userController.createUser
 )
 router.get(
@@ -80,11 +82,12 @@ router.post(
   userController.resetPassword,
 );
 router.post(
-  '/make-admin', 
+  '/make-branch&sub-admin/:id', 
   auth(USER_ROLE.super_admin),
   // validateRequest(userValidation.AdminCreateAdminSchema),
   userController.makeAdmin,
 );
+
 
 
 

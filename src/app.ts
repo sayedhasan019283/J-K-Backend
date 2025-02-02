@@ -9,6 +9,7 @@ import globalErrorHandler from './app/middlewares/globalErrorhandler';
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
 import logger from './logger';
+import bodyParser from 'body-parser';
 
 const app: Application = express();
 
@@ -23,6 +24,7 @@ app.use(
       next();
     } else {
       express.json()(req, res, next);
+      // bodyParser.urlencoded({ extended: true })(req, res, next);
     }
   }
 );
