@@ -5,7 +5,7 @@ import UserModel from "./user.model"
 import config from "../../config";
 import { createToken } from "./user.utils";
 import nodemailer from "nodemailer";
-import mongoose from "mongoose";
+import mongoose, { get } from "mongoose";
 
 const createUserIntoDB = async (userData: TUser) => {
   const user = await UserModel.findOne({ email: userData.email })
@@ -223,6 +223,16 @@ const makeAdminFromDB = async (branchID : mongoose.Types.ObjectId ,payload: Part
 
 }
 
+const getSingleUserFromDB = async (id: string) => {
+  const result = await UserModel.findById(id);
+  return result;
+}
+
+const verifiedFromDB = async (id: string) => {
+  const result = await UserModel.findByIdAndUpdate(id, { isVerified: true }, { new: true });
+  return result
+} 
+
 export const userService = {
   createUserIntoDB,
   loginUser,
@@ -233,4 +243,6 @@ export const userService = {
   forgetPasswordFromDB,
   resetPasswordFromDB,
   makeAdminFromDB,
+  getSingleUserFromDB,
+  verifiedFromDB
 }

@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import UserModel from './user.model';
 import AppError from '../../errors/AppError';
 import mongoose from 'mongoose';
+import ApiError from '../../errors/ApiError';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -225,6 +226,42 @@ const makeAdmin = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getSingleUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const result = await userService.getSingleUserFromDB(id);
+    if (!result) {
+      throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
+    }
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: "Get Single User successfully",
+      data: result
+    });
+  } catch (error) {
+    next(error)
+  }
+});
+
+const verifiedUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const result = await userService.verifiedFromDB(id);
+    if (!result) {
+      throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
+    }
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: "Verified User successfully",
+      data: result
+    });
+  } catch (error) {
+    next(error)
+  }
+});
+
 export const userController = {
   createUser,
   loginUser,
@@ -235,5 +272,7 @@ export const userController = {
   suspendUser,
   forgetPassword,
   resetPassword,
-  makeAdmin
+  makeAdmin,
+  getSingleUser,
+  verifiedUser
 };

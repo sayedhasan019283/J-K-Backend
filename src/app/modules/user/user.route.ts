@@ -88,7 +88,17 @@ router.post(
   userController.makeAdmin,
 );
 
+router.get(
+  '/read-user/:id',
+  auth( USER_ROLE.admin, USER_ROLE.super_admin),
+  userController.getSingleUser
+)
 
+router.get(
+  '/verified-user',
+  auth( USER_ROLE.admin, USER_ROLE.super_admin),
+  userController.verifiedUser
+)
 
 
 
