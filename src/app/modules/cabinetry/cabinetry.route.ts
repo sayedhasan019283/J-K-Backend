@@ -1,8 +1,5 @@
-
 import express from 'express';
 import { cabinetryController } from './cabinetry.controller';
-import validateRequest from '../../middlewares/validateRequest';
-import { cabinetryValidation } from './cabinetry.validation';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../user/user.constant';
 import fileUploadHandler from '../../middlewares/fileUploadHandler';
@@ -20,4 +17,23 @@ router.post(
     cabinetryController.createCabinetry
 )
 
+router.get(
+    '/read-cabinetry',
+    auth(USER_ROLE.sub_admin, USER_ROLE.admin),
+    cabinetryController.readCabinetry
+)
+
+router.patch(
+    '/update-cabinetry/:id',
+    auth(USER_ROLE.sub_admin, USER_ROLE.admin),
+    // validateRequest(cabinetryValidation.cabinetryValidationSchema),
+    upload.single('imageUrl'),
+    cabinetryController.updateCabinetry
+)
+
+router.delete(
+    '/delete-cabinetry/:id',
+    auth(USER_ROLE.sub_admin, USER_ROLE.admin),
+    cabinetryController.deleteCabinetry
+)
 export const cabinetryRoute = router;

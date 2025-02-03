@@ -21,6 +21,51 @@ const createCabinetry = catchAsync(async (req, res, next) => {
     });
 });
 
+const readCabinetry = catchAsync(async (req, res, next) => {
+    const result = await cabinetryService.readCabinetry();
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Cabinetry is not Retrived successfully");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Cabinetry retrived successfully",
+        data: result,
+    });
+});
+
+const updateCabinetry = catchAsync(async (req, res, next) => {
+    const payload = req.body;
+    const {id} = req.params;
+    if (req.file) {
+        payload.imageUrl = `/uploads/cabinetry/${req.file.filename}`;
+      }
+    const result = await cabinetryService.updateCabinetry(id,payload);
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Cabinetry is not updated");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Cabinetry is updated successfully",
+        data: result,
+    });
+});
+
+const deleteCabinetry = catchAsync(async (req, res, next) => {
+    const { id } = req.params
+    const result = await cabinetryService.deleteCabinetry(id);
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Cabinetry is not Deleted");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Cabinetry is deleted successfully",
+        data: result,
+    });
+})
+
 export const cabinetryController = {
     createCabinetry,
+    readCabinetry,
+    updateCabinetry,
+    deleteCabinetry,
 };
