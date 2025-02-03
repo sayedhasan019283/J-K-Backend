@@ -8,6 +8,8 @@ import { paymentRoute } from '../modules/payment/payment.route';
 import { createBranchRoutes } from '../modules/createBranch/createBranch.route';
 import { stockItemRoutes } from '../modules/stockItem/stockItem.route';
 import { partsRoutes } from '../modules/parts/parts.routes';
+import { categoryRoutes } from '../modules/category/category.route';
+import { cabinetryRoute } from '../modules/cabinetry/cabinetry.route';
 const router = Router();
 
 const moduleRoutes = [
@@ -44,6 +46,14 @@ const moduleRoutes = [
   {
     path: '/parts',
     route: partsRoutes,
+  },
+  {
+    path: '/category',
+    route: categoryRoutes,
+  },
+  {
+    path: '/cabinetry',
+    route: cabinetryRoute,
   },
 ];
 

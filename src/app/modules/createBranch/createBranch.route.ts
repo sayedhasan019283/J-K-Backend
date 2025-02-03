@@ -9,32 +9,32 @@ const router = express.Router();
 
 router.post(
     '/create-branch',
-    // auth(USER_ROLE.super_admin),
+    auth(USER_ROLE.super_admin),
     validateRequest(branchValidation.branchValidationSchema),
     createBranchController.createBranch
 )
 router.get(
     '/read-branch',
-    // auth(USER_ROLE.super_admin),
+    auth(USER_ROLE.super_admin),
     createBranchController.readBranch
 )
 
 router.patch(
     '/update-branch/:id',
-    // auth(USER_ROLE.super_admin),
+    auth(USER_ROLE.super_admin),
     validateRequest(branchValidation.branchValidationSchema),
     createBranchController.updateBranch
 )
 
 router.delete(
     '/delete-branch/:id',
-    // auth(USER_ROLE.super_admin),
+    auth(USER_ROLE.super_admin),
     createBranchController.deleteBranch
 )
 
 router.get(
     '/single-branch/:id',
-    // auth(USER_ROLE.super_admin),
+    auth(USER_ROLE.super_admin),
     createBranchController.getSingleBranch
 )
 

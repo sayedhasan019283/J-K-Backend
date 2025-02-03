@@ -77,7 +77,7 @@ router.post(
 );
 router.post(
   '/reset-passs/:id',
-  auth( USER_ROLE.admin, USER_ROLE.user, USER_ROLE.super_admin),
+  auth( USER_ROLE.admin, USER_ROLE.user, USER_ROLE.super_admin, USER_ROLE.sub_admin),
   validateRequest(userValidation.ResetPasswordValidationSchema),
   userController.resetPassword,
 );

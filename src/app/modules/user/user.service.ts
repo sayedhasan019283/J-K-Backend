@@ -6,6 +6,7 @@ import config from "../../config";
 import { createToken } from "./user.utils";
 import nodemailer from "nodemailer";
 import mongoose, { get } from "mongoose";
+import { BranchModel } from "../createBranch/createBranch.model";
 
 const createUserIntoDB = async (userData: TUser) => {
   const user = await UserModel.findOne({ email: userData.email })
@@ -168,6 +169,11 @@ const resetPasswordFromDB = async (payload: TResetPassword, id: string) => {
 const makeAdminFromDB = async (branchID : mongoose.Types.ObjectId ,payload: Partial<TUser>) => {
   const { email, password, message } = payload;
   payload.branchID = branchID;
+  const branch = await BranchModel.findById(branchID);
+  if (!branch) {
+    throw new Error("Branch Not Found");
+  }
+  payload.branch = branch.name;
   const result = await UserModel.create(payload)
   if (!result) {
     throw new Error("Admin Not Created");
