@@ -234,8 +234,23 @@ const getSingleUserFromDB = async (id: string) => {
   return result;
 }
 
-const verifiedFromDB = async (id: string) => {
+const verifyFromDB = async (id: string) => {
   const result = await UserModel.findByIdAndUpdate(id, { isVerified: true }, { new: true });
+  return result
+} 
+
+const getAllAdminAcordingToBranchFromDB = async (branchID: string) => {
+  const result = await UserModel.find({ branchID : branchID });
+  return result;
+}
+
+const getAllUserAcordingToBranchFromDB = async (branchID: string) => {
+  const result = await UserModel.find({ branchID : branchID });
+  return result;
+}
+
+const getOneUserFromDB = async (id: string) => {
+  const result = await UserModel.findById(id);
   return result
 } 
 
@@ -250,5 +265,9 @@ export const userService = {
   resetPasswordFromDB,
   makeAdminFromDB,
   getSingleUserFromDB,
-  verifiedFromDB
+  verifyFromDB,
+  getAllAdminAcordingToBranchFromDB,
+  getAllUserAcordingToBranchFromDB,
+  getOneUserFromDB,
 }
+

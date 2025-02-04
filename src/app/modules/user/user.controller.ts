@@ -244,10 +244,10 @@ const getSingleUser = catchAsync(async (req: Request, res: Response, next: NextF
   }
 });
 
-const verifiedUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+const verifiyUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const result = await userService.verifiedFromDB(id);
+    const result = await userService.verifyFromDB(id);
     if (!result) {
       throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
     }
@@ -255,6 +255,52 @@ const verifiedUser = catchAsync(async (req: Request, res: Response, next: NextFu
       statusCode: 200,
       success: true,
       message: "Verified User successfully",
+      data: result
+    });
+  } catch (error) {
+    next(error)
+  }
+});
+
+const  getAllAdminAcordingToBranch = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const {branchID} = req.params
+  const result = await userService.getAllAdminAcordingToBranchFromDB(branchID);
+  if (!result) {
+    throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
+  }
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Get Single User successfully",
+    data: result
+  });
+})
+
+const getAllUserAcordingToBranch = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const {branchID} = req.params
+  const result = await userService.getAllUserAcordingToBranchFromDB(branchID);
+  if (!result) {
+    throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
+  }
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Get Single User successfully",
+    data: result  
+  })
+})
+
+const getOneUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const result = await userService.getOneUserFromDB(id);
+    if (!result) {
+      throw new ApiError( httpStatus.BAD_REQUEST,"User Not Found");
+    }
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: "Get Single User successfully",
       data: result
     });
   } catch (error) {
@@ -274,5 +320,8 @@ export const userController = {
   resetPassword,
   makeAdmin,
   getSingleUser,
-  verifiedUser
+  verifiyUser,
+  getAllAdminAcordingToBranch,
+  getAllUserAcordingToBranch,
+  getOneUser,
 };

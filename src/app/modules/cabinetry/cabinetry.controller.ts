@@ -22,7 +22,8 @@ const createCabinetry = catchAsync(async (req, res, next) => {
 });
 
 const readCabinetry = catchAsync(async (req, res, next) => {
-    const result = await cabinetryService.readCabinetry();
+    const {userId} = req.user
+    const result = await cabinetryService.readCabinetry(userId);
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Cabinetry is not Retrived successfully");
     }

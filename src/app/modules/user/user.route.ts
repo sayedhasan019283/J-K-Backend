@@ -95,15 +95,27 @@ router.get(
 )
 
 router.get(
-  '/verified-user',
+  '/verify-user',
   auth( USER_ROLE.admin, USER_ROLE.super_admin),
-  userController.verifiedUser
+  userController.verifiyUser
 )
 
+router.get(
+  '/get-all-admin-acording-to-branch/:branchID',
+  auth( USER_ROLE.admin, USER_ROLE.super_admin),
+  userController.getAllAdminAcordingToBranch
+)
 
+router.get(
+  '/get-all-user-acording-to-branch/:branchID',
+  auth( USER_ROLE.admin, USER_ROLE.super_admin),
+  userController.getAllUserAcordingToBranch
+)
 
-
-
-
+router.get(
+  '/get-single-user/:id',
+  auth( USER_ROLE.admin, USER_ROLE.super_admin),
+  userController.getOneUser
+)
 
 export const userRoutes = router;
