@@ -19,8 +19,12 @@ router.post(
 )
 router.get(
     '/read-parts',
-    auth( USER_ROLE.admin),
+    auth( USER_ROLE.admin, USER_ROLE.sub_admin),
     partsController.getAllPart
+)    
+router.get(
+    '/read-parts-without-login',
+    partsController.readPartWithoutLogin
 )    
 
 router.patch(

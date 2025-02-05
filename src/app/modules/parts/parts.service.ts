@@ -1,14 +1,32 @@
 import mongoose from "mongoose";
 import { TPart } from "./parts.interface";
 import { PartModel } from "./parts.model";
+import UserModel from "../user/user.model";
 
-const createPartFromDB = async (stockItemId : mongoose.Types.ObjectId ,payload: TPart) => {
+const createPartFromDB = async (userId : string ,stockItemId : mongoose.Types.ObjectId ,payload: TPart) => {
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+        throw new Error("User not found");
+    }
+    payload.branchName = user.branch;
+    payload.branchId = user.branchID;
      payload.stockItemId = stockItemId;
     const result = await PartModel.create(payload);
     return result;
 }
 
-const readpartFromDB = async () => {
+const readpartFromDB = async (userId : string) => {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+        throw new Error("User not found");
+    }
+    const branchName = user.branch;
+    const branchId = user.branchID;
+    const result = await PartModel.find({ branchId : branchId});
+    return result;
+}
+const readpartWithoutLoginFromDB = async () => {
     const result = await PartModel.find();
     return result;
 }
@@ -23,9 +41,12 @@ const deletepartFromDB = async (id : string) => {
     return result
 }
 
+
+
 export const PartService = { 
     createPartFromDB,
-    readpartFromDB,
+    readpartWithoutLoginFromDB,
     updatepartFromDB,
     deletepartFromDB, 
+    readpartFromDB,
 }

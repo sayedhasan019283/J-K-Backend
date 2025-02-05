@@ -7,12 +7,13 @@ import ApiError from "../../errors/ApiError";
 const createPart = catchAsync(async (req, res, next) => {
     const payload = req.body;
     const {id} = req.params;
+    const {userId} = req.user;
     const stockItemId = new mongoose.Types.ObjectId(id);
     payload.price = Number(payload.price);
     if (req.file) {
         payload.image = `/uploads/parts/${req.file.filename}`;
       }
-    const result = await PartService.createPartFromDB(stockItemId ,payload);
+    const result = await PartService.createPartFromDB(userId,stockItemId ,payload);
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Part is not created");
     }
@@ -55,7 +56,20 @@ const deletepart = catchAsync(async (req, res, next) => {
 });
 
 const getAllPart = catchAsync(async (req, res, next) => {
-    const result = await PartService.readpartFromDB();
+
+    const {userId} = req.user;
+    const result = await PartService.readpartFromDB(userId);
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Part is not found");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Part is retrived successfully",
+        data: result,
+    });
+});
+const readPartWithoutLogin = catchAsync(async (req, res, next) => {
+    const result = await PartService.readpartWithoutLoginFromDB();
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Part is not found");
     }
@@ -70,5 +84,6 @@ export const partsController = {
     createPart,
     updatepart,
     deletepart,
-    getAllPart
+    getAllPart,
+    readPartWithoutLogin
 }

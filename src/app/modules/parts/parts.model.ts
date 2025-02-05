@@ -9,6 +9,8 @@ const CabinetSchema: Schema = new Schema(
       description: { type: String, required: true, trim: true },
       price: { type: Number, required: true, min: 0 },
       stockItemId : { type: Schema.Types.ObjectId, ref: 'Title' },
+      branchName : { type: String, required: true },
+      branchId : { type: Schema.Types.ObjectId, ref: 'Branch' },
     },
     { timestamps: true }
   );

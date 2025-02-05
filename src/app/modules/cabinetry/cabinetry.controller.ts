@@ -64,9 +64,23 @@ const deleteCabinetry = catchAsync(async (req, res, next) => {
     });
 })
 
+const readCabinetryWithoutlogin = catchAsync(async (req, res, next) => {
+    const {branchId} = req.params
+    const result = await cabinetryService.readCabinetryWithoutloginFromDB(branchId);
+    if (!result || result.data.length === 0) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Cabinetry is not Retrived successfully");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Cabinetry retrived successfully",
+        data: result,
+    });
+});
+
 export const cabinetryController = {
     createCabinetry,
     readCabinetry,
     updateCabinetry,
     deleteCabinetry,
+    readCabinetryWithoutlogin,
 };

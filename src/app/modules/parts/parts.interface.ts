@@ -7,4 +7,6 @@ export type TPart = {
     description: string;
     stockItemId : mongoose.Types.ObjectId
     price: number;
+    branchName : string;
+    branchId : mongoose.Types.ObjectId
   }

@@ -36,4 +36,9 @@ router.delete(
     auth(USER_ROLE.sub_admin, USER_ROLE.admin),
     cabinetryController.deleteCabinetry
 )
+
+router.get(
+    '/read-cabinetry-without-login/:branchId',
+    cabinetryController.readCabinetryWithoutlogin
+)
 export const cabinetryRoute = router;
