@@ -11,7 +11,7 @@ const createPartFromDB = async (userId : string ,stockItemId : mongoose.Types.Ob
     }
     payload.branchName = user.branch;
     payload.branchId = user.branchID;
-     payload.stockItemId = stockItemId;
+    payload.stockItemId = stockItemId;
     const result = await PartModel.create(payload);
     return result;
 }

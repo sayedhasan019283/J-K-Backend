@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-export type TTitle = {
-    title: string;
+export type TStockItemCategory = {
+    stockItemId : mongoose.Types.ObjectId
+    title : string;
     branchName : string;
     branchId : mongoose.Types.ObjectId;
-  }
+}

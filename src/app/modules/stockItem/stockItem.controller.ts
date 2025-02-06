@@ -7,8 +7,8 @@ const createTitle = catchAsync(async (req, res, next) => {
     const payload = req.body;
     
     console.log("pAYLOAD" ,typeof payload.title)
-   
-    const result = await StockItemService.createTitle(payload);
+    const {userId} = req.user
+    const result = await StockItemService.createTitle(userId ,payload);
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Title is not created");
     }
@@ -20,7 +20,8 @@ const createTitle = catchAsync(async (req, res, next) => {
 });
 
 const readTitle = catchAsync(async (req, res, next) => {
-    const result = await StockItemService.readTitle();
+    const {userId} = req.user
+    const result = await StockItemService.readTitle(userId);
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Title is not Retrived successfully");
     }
