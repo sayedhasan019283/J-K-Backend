@@ -40,5 +40,10 @@ router.delete(
     partsController.deletepart         
 )
 
+router.get(
+    '/search-parts',
+    partsController.searchPart
+)
+
 
 export const partsRoutes = router

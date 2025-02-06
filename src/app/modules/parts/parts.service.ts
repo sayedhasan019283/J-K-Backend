@@ -41,6 +41,19 @@ const deletepartFromDB = async (id : string) => {
     return result
 }
 
+// export type TSearchQuery =  query: string;
+
+  
+const searchPartFromDB = async (query: string) => {
+    if (!query) return []; // Return empty array if no query
+  
+    // Modify the search logic as per your schema, here searching by 'name'
+    const items = await PartModel.find({
+      title: { $regex: query, $options: 'i' }, // Case-insensitive regex search
+    });
+  
+    return items;
+  };
 
 
 export const PartService = { 
@@ -49,4 +62,5 @@ export const PartService = {
     updatepartFromDB,
     deletepartFromDB, 
     readpartFromDB,
+    searchPartFromDB
 }

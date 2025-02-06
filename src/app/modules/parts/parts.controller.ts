@@ -80,10 +80,30 @@ const readPartWithoutLogin = catchAsync(async (req, res, next) => {
     });
 });
 
+const searchPart = catchAsync(async (req, res, next) => {
+    const { title } = req.query;
+
+    // Ensure title is a valid string or set to an empty string if it's undefined
+    const query = typeof title === 'string' ? title : '';
+
+    const result = await PartService.searchPartFromDB(query);
+    
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Parts is not found");
+    }
+    
+    res.status(200).json({
+        success: true,
+        message: "Part is retrieved successfully",
+        data: result,
+    });
+});
+
 export const partsController = {
     createPart,
     updatepart,
     deletepart,
     getAllPart,
-    readPartWithoutLogin
+    readPartWithoutLogin,
+    searchPart
 }
