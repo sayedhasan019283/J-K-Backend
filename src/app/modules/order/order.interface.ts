@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 export type TOrder = {
-    userId: mongoose.Schema.Types.ObjectId;
-    branchId: mongoose.Schema.Types.ObjectId;
+    userId: mongoose.Types.ObjectId;
+    branchId: mongoose.Types.ObjectId;
     companyName?: string;
     firstName: string;
     lastName: string;

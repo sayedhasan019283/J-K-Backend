@@ -24,4 +24,4 @@ const ShippingAddressSchema = new Schema<TOrder>(
     { timestamps: true }
   );
 
-  export const ShippingAddressModel = mongoose.model<TOrder>("Order",ShippingAddressSchema);
+  export const OrderModel = mongoose.model<TOrder>("Order",ShippingAddressSchema);
