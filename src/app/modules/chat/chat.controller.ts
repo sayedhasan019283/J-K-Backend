@@ -15,6 +15,10 @@ const createMessage = async (req: Request, res: Response, next: NextFunction) =>
             });
         }
 
+        if (req.file) {
+            req.body.messagePhoto = `/uploads/messages_photos/${req.file.filename}`
+        }
+
         // Save message to DB
         const message = await chatService.createMessageFromBD(payload);
         if (!message) {

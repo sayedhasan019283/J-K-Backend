@@ -6,6 +6,7 @@ const MessageSchema: Schema = new Schema(
       senderId: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the sender
       receiverId: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the receiver
       text: { type: String, required: true }, // The content of the message
+      messagePhoto : { type: String, default: null },
     },
     {
       timestamps: true, // Automatically adds createdAt and updatedAt fields
