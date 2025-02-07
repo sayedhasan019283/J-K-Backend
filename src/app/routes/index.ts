@@ -10,6 +10,7 @@ import { partsRoutes } from '../modules/parts/parts.routes';
 import { categoryRoutes } from '../modules/category/category.route';
 import { cabinetryRoute } from '../modules/cabinetry/cabinetry.route';
 import { priceingRoutes } from '../modules/priceing/priceing.route';
+import { stockItemCategoryRoute } from '../modules/stockItemCategory/stockItemCategory.route';
 const router = Router();
 
 const moduleRoutes = [ 
@@ -57,6 +58,10 @@ const moduleRoutes = [
   {
     path: '/priceing',
     route: priceingRoutes,
+  },
+  {
+    path: '/stock-item-category',
+    route: stockItemCategoryRoute,
   },
 ];
 
