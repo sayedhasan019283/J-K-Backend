@@ -40,6 +40,14 @@ const readOrderFromDB = async (userId : mongoose.Types.ObjectId) => {
     return order;
 }
 
+const readOneDataFromDB = async (id : string) => {
+    const order = await OrderModel.findById(id);
+    if (!order) {
+        throw new Error("Order is not found");
+    }
+    return order;
+}
+
 const updateOrderFromDB = async (id : string, payload : TOrder) => {
     const order = await OrderModel.findByIdAndUpdate(id, payload, {new : true});
     if (!order) {
@@ -60,5 +68,6 @@ export const orderService = {
     createOrderFromDB, 
     readOrderFromDB, 
     updateOrderFromDB, 
-    deleteOrderFromDB
+    deleteOrderFromDB,
+    readOneDataFromDB
 };

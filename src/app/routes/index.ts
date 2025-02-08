@@ -68,6 +68,7 @@ const moduleRoutes = [
     path: '/order',
     route: orderRoutes,
   },
+
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

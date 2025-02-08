@@ -16,8 +16,14 @@ router.post(
 
 router.get(
     '/read-order',
-    auth(USER_ROLE.user, USER_ROLE.admin, USER_ROLE.super_admin),
+    auth( USER_ROLE.admin, USER_ROLE.sub_admin),
     orderController.readOrder
+)
+
+router.get(
+    '/read-order/:id',
+    auth(USER_ROLE.user),
+    orderController.readOneData
 )
 
 router.delete(
@@ -26,4 +32,4 @@ router.delete(
     orderController.deleteOrder
 )   
 
-export const orderRoutes = router
+export const orderRoutes = router;

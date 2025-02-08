@@ -30,6 +30,19 @@ const readOrder = catchAsync(async (req, res, next) => {
     });
 }); 
 
+const readOneData = catchAsync(async (req, res, next) => {
+    const {id} = req.params;
+    const result = await orderService.readOneDataFromDB(id);
+    if (!result) {    
+        throw new ApiError(httpStatus.BAD_REQUEST, "Order is not Retrived successfully");
+    }
+    res.status(200).json({
+        success: true,
+        message: "Order retrived successfully",
+        data: result,
+    });
+})
+
 const updateOrder = catchAsync(async (req, res, next) => {    
     const payload = req.body;
     const {id} = req.params;
@@ -63,4 +76,5 @@ export const orderController = {
     updateOrder, 
     readOrder, 
     deleteOrder,
+    readOneData
 }

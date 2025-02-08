@@ -33,7 +33,7 @@ router.delete(
 )
 
 router.patch(
-    '/update-single-stock-category',
+    '/update-single-stock-category/:stockItemCategoryId',
     auth(USER_ROLE.admin, USER_ROLE.sub_admin),
     validateRequest(validateStockItemCategory.stockItemCategorySchema),
     stockItemCategoryontroller.updateStockItemCategory
