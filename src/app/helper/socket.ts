@@ -34,7 +34,7 @@ const socket = (io: Server) => {
             console.log(colors.green(`User ${data.userId} joined their room`));
         });
 
-        // // Listen for the newMessage event from a client
+        // Listen for the newMessage event from a client
         // socket.on('newMessage', (data: { senderId: string; receiverId: string; message: string }) => {
         //     console.log('Received newMessage event:', data); // Log the incoming data
         //     const { senderId, receiverId, message } = data;
