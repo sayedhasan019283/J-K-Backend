@@ -6,7 +6,6 @@ const StockItemCategorySchema = new Schema(
     title: {
       type: String,
       required: true,
-      trim: true,
     },
     stockItemId : { 
             type: Schema.Types.ObjectId, 
